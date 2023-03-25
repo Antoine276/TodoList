@@ -1,6 +1,8 @@
 import './generatedDOM_style.css';
 import { formatDistance } from 'date-fns';
-import { tobjProjectsArray, addNewTodoToProject } from './projectManager';
+import {
+  tobjProjectsArray, addNewTodoToProject, deleteTodoFromProject, deleteProject,
+} from './projectManager';
 
 // *************************
 // **** State variables ****
@@ -19,7 +21,16 @@ listContainer.setAttribute('display', 'hidden');
 
 // Buttons
 const menuButton = document.getElementById('menu_button');
+const deleteProjectButton = document.getElementById('delete_project_button');
 const addTodoButton = document.getElementById('add_todo_button');
+menuButton.addEventListener('click', () => toggleDisplay(listContainer));
+deleteProjectButton.addEventListener('click', () => {
+  if (deleteProject(currentProjectIndex)) {
+    displayProjectsList();
+    displayProject(0);
+  }
+});
+addTodoButton.addEventListener('click', () => addNewTodo());
 
 // Input fields
 const titleInput = document.getElementById('title_input');
@@ -38,8 +49,6 @@ function toggleDisplay(element) {
     element.setAttribute('display', 'hidden');
   }
 }
-
-menuButton.addEventListener('click', () => toggleDisplay(listContainer));
 
 // Reset DOM area
 function reset(element) {
@@ -62,7 +71,7 @@ function priorityColor(priority) {
 }
 
 // Build a Todo Card
-function buildTodoCard(Todo, dtCurrDate) {
+function buildTodoCard(Todo, index, dtCurrDate) {
   // Top-level Card
   const todoCard = document.createElement('div');
   todoCard.classList.add('todo_card');
@@ -84,25 +93,45 @@ function buildTodoCard(Todo, dtCurrDate) {
   todoDescription.textContent = Todo.sDescription;
   todoDescription.setAttribute('display', 'hidden');
 
-  // Extend button
-  const extendButton = document.createElement('button');
-  extendButton.classList.add('extend_button');
-  extendButton.textContent = '﹀';
-  extendButton.addEventListener('click', () => {
-    toggleDisplay(todoDescription);
+  // Buttons container
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.classList.add('todo_buttons_container');
 
-    if (extendButton.textContent === '﹀') {
-      extendButton.textContent = '︿';
-    } else {
-      extendButton.textContent = '﹀';
-    }
+  // Delete button
+  const deleteButton = document.createElement('button');
+  deleteButton.classList.add('delete_button');
+  deleteButton.textContent = '🗑';
+  deleteButton.addEventListener('click', () => {
+    deleteTodoFromProject(currentProjectIndex, index);
+    displayProject(currentProjectIndex);
   });
+
+  buttonsContainer.appendChild(deleteButton);
+
+  // Only if description exists
+  if (todoDescription.textContent !== '') {
+    // Extend button
+    const extendButton = document.createElement('button');
+    extendButton.classList.add('extend_button');
+    extendButton.textContent = '﹀';
+    extendButton.addEventListener('click', () => {
+      toggleDisplay(todoDescription);
+
+      if (extendButton.textContent === '﹀') {
+        extendButton.textContent = '︿';
+      } else {
+        extendButton.textContent = '﹀';
+      }
+    });
+
+    buttonsContainer.appendChild(extendButton);
+  }
 
   // Building card and append to container
   todoCard.appendChild(todoTitle);
   todoCard.appendChild(todoDueDate);
   todoCard.appendChild(todoDescription);
-  todoCard.appendChild(extendButton);
+  todoCard.appendChild(buttonsContainer);
 
   todoList.appendChild(todoCard);
 }
@@ -115,8 +144,8 @@ export function displayProject(index) {
   // Get current date
   const dtCurrDate = Date.now();
 
-  tobjProjectsArray[index].tobjTodosArray.forEach((obj) => {
-    buildTodoCard(obj, dtCurrDate);
+  tobjProjectsArray[index].tobjTodosArray.forEach((obj, objIndex) => {
+    buildTodoCard(obj, objIndex, dtCurrDate);
   });
 
   // Set current project displayed
@@ -152,5 +181,3 @@ function addNewTodo() {
 
   displayProject(currentProjectIndex);
 }
-
-addTodoButton.addEventListener('click', () => addNewTodo());

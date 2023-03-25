@@ -71,7 +71,12 @@
     display: none;
 }
 
-.todo_card > .extend_button {
+.todo_card > .todo_buttons_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todo_buttons_container > .extend_button {
     color: var(--custom-white);
     font-size: 1.2rem;
     font-weight: 600;
@@ -81,9 +86,27 @@
     border-radius: 8px;
     padding: 0px 4px;
     margin: 6px 0;
+    margin-right: 20px;
 }
 
-.todo_card > .extend_button:hover {
+.todo_buttons_container > .extend_button:hover {
+    cursor: pointer;
+    border-color: var(--custom-white);
+}
+
+.todo_buttons_container > .delete_button {
+    color: var(--custom-white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    border: solid transparent 0.12px;
+    border-radius: 8px;
+    padding: 0px 6px;
+    margin: 6px 0;
+}
+
+.todo_buttons_container > .delete_button:hover {
     cursor: pointer;
     border-color: var(--custom-white);
 }
