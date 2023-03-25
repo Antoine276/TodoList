@@ -23,27 +23,43 @@
             <div id="todo_list"></div>
         </div>
         <div class="input_container">
-            <h1>Add A New Todo</h1>
-            <form action="">
-                <div class="input_item">
-                    <label for="title_input">Title</label>
-                    <input type="text" name="title" id="title_input" minlength="0" maxlength="40" placeholder="Do the groceries" required>
-                </div>
-                <div class="input_item">
-                    <label for="dueDate_input">Due for</label>
-                    <input type="date" name="dueDate" id="dueDate_input" required>
-                </div>
-                <div class="input_item">
-                    <label for="priority_input">Priority</label>
-                    <input type="number" name="priority" id="priority_input" min="1" max="3" value="1" required>
-                </div>
-                <div class="input_item">
-                    <label for="description_input">Description</label>
-                    <textarea name="description" id="description_input" cols="1" rows="5" placeholder="Buy 3 sponges and 1 avocado" ></textarea>
-                </div>
+            <div class="input_sub_container">
+                <h1>Add A New Todo</h1>
+                <form action="">
+                    <div class="input_item">
+                        <label for="title_input">Title*</label>
+                        <input type="text" name="title" id="title_input" minlength="0" maxlength="40" placeholder="Do the groceries" required>
+                    </div>
+                    <div class="input_item">
+                        <label for="dueDate_input">Due for*</label>
+                        <input type="date" name="dueDate" id="dueDate_input" required>
+                    </div>
+                    <div class="input_item">
+                        <label for="priority_input">Priority*</label>
+                        <input type="number" name="priority" id="priority_input" min="1" max="3" value="1" required>
+                    </div>
+                    <div class="input_item">
+                        <label for="description_input">Description</label>
+                        <textarea name="description" id="description_input" cols="1" rows="5" placeholder="Buy 3 sponges and 1 avocado"></textarea>
+                    </div>
+                    <button type="button" id="add_todo_button">Add</button>
+                </form>
+            </div>
 
-                <button type="button" id="add_todo_button">Add</button>
-            </form>
+            <div class="input_sub_container">
+                <h1>Add A New Project</h1>
+                <form action="">
+                    <div class="input_item">
+                        <label for="project_title_input">Title*</label>
+                        <input type="text" name="project_title" id="project_title_input" minlength="0" maxlength="40" placeholder="Family Tasks" required>
+                    </div>
+                    <div class="input_item">
+                        <label for="project_description_input">Description</label>
+                        <textarea name="project_description" id="project_description_input" cols="1" rows="3" placeholder="For all family related memos"></textarea>
+                    </div>
+                    <button type="button" id="add_project_button">Add</button>
+                </form>
+            </div>
         </div>
     </div>
     <script src="./main.js"></script>

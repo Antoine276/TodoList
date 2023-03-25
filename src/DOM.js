@@ -1,13 +1,12 @@
 import './generatedDOM_style.css';
 import { formatDistance } from 'date-fns';
 import {
-  tobjProjectsArray, addNewTodoToProject, deleteTodoFromProject, deleteProject,
+  tobjProjectsArray, addProject, deleteProject, addNewTodoToProject, deleteTodoFromProject,
 } from './projectManager';
 
 // *************************
 // **** State variables ****
 // *************************
-
 let currentProjectIndex = 0; // Index of current project displayed
 
 // ******************
@@ -19,10 +18,21 @@ const todoList = document.getElementById('todo_list');
 const listContainer = document.getElementById('list_container');
 listContainer.setAttribute('display', 'hidden');
 
+// Input fields
+const titleInput = document.getElementById('title_input');
+const dueDateInput = document.getElementById('dueDate_input');
+const priorityInput = document.getElementById('priority_input');
+const descriptionInput = document.getElementById('description_input');
+const projectTitleInput = document.getElementById('project_title_input');
+const projectDescriptionInput = document.getElementById('project_description_input');
+
 // Buttons
 const menuButton = document.getElementById('menu_button');
 const deleteProjectButton = document.getElementById('delete_project_button');
 const addTodoButton = document.getElementById('add_todo_button');
+const addProjectButton = document.getElementById('add_project_button');
+
+// Buttons event listeners
 menuButton.addEventListener('click', () => toggleDisplay(listContainer));
 deleteProjectButton.addEventListener('click', () => {
   if (deleteProject(currentProjectIndex)) {
@@ -31,12 +41,10 @@ deleteProjectButton.addEventListener('click', () => {
   }
 });
 addTodoButton.addEventListener('click', () => addNewTodo());
-
-// Input fields
-const titleInput = document.getElementById('title_input');
-const dueDateInput = document.getElementById('dueDate_input');
-const priorityInput = document.getElementById('priority_input');
-const descriptionInput = document.getElementById('description_input');
+addProjectButton.addEventListener('click', () => {
+  addProject(projectTitleInput.value, projectDescriptionInput.value);
+  displayProjectsList();
+});
 
 // *******************
 // **** Functions ****
@@ -108,7 +116,7 @@ function buildTodoCard(Todo, index, dtCurrDate) {
 
   buttonsContainer.appendChild(deleteButton);
 
-  // Only if description exists
+  // If description exists
   if (todoDescription.textContent !== '') {
     // Extend button
     const extendButton = document.createElement('button');
@@ -150,6 +158,8 @@ export function displayProject(index) {
 
   // Set current project displayed
   currentProjectIndex = index;
+
+  displayProjectsList();
 }
 
 // Display index with list of Projects
@@ -162,6 +172,12 @@ export function displayProjectsList() {
   tobjProjectsArray.forEach((obj, objIndex) => {
     const list = document.createElement('li');
     list.textContent = obj.sTitle;
+    if (objIndex === currentProjectIndex) {
+      list.style.fontWeight = '800';
+    }
+    if (obj.sDescription !== '') {
+      list.setAttribute('title', obj.sDescription);
+    }
     list.addEventListener('click', () => displayProject(objIndex));
     container.appendChild(list);
   });

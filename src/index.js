@@ -1,16 +1,19 @@
 import {
-  addProject, addNewTodoToProject, modifyTodoFromProject,
+  getAllFromLocalStorage, saveAllInLocalStorage, addProject, addNewTodoToProject,
 } from './projectManager';
-import { displayProjectsList, displayProject } from './DOM';
+import { displayProject } from './DOM';
 
-addProject('yoy', 'hellooooo');
+getAllFromLocalStorage();
+// Default presentation
+addProject('Default', 'Default project');
 addProject('qsfqg', 'hellooooo');
 addProject('yoqsfqsfqsfy', 'hellooooo');
 addProject('qsfqsfqsfqsfqsf', 'hellooooo');
-displayProjectsList();
+displayProject(0);
 
 addNewTodoToProject(0, 'herhej', Date.now(), 5, 'je suis un todo');
-displayProject(0);
+saveAllInLocalStorage();
 
-modifyTodoFromProject(0, 0, 'sTitle', 'je suis un nouveau nom');
-displayProject(0);
+// Display default
+
+// modifyTodoFromProject(0, 0, 'sTitle', 'je suis un nouveau nom');

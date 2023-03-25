@@ -1,9 +1,46 @@
 import { createProject } from './project';
 
 export const tobjProjectsArray = [];
+const projectsArrayKey = 'projectsArray';
 
-export function addProject(title) {
-  tobjProjectsArray.push(createProject(title));
+export function saveAllInLocalStorage() {
+  localStorage.setItem(projectsArrayKey, JSON.stringify(tobjProjectsArray));
+}
+
+export function getAllFromLocalStorage() {
+  // If nothing in local storage, return false
+  if (localStorage.length === 0) {
+    return false;
+  }
+
+  // Get and parse from local storage
+  const localStorageArray = JSON.parse(localStorage.getItem(projectsArrayKey));
+
+  resetProjectsArray();
+
+  localStorageArray.forEach((project, index) => {
+    addProject(project.sTitle, project.sDescription);
+
+    project.tobjTodosArray.forEach((todo) => {
+      addNewTodoToProject(
+        index,
+        todo.sTitle,
+        Date.parse(todo.dtDueDate),
+        parseInt(todo.nPriority, 10),
+        todo.sDescription,
+      );
+    });
+  });
+
+  return true;
+}
+
+function resetProjectsArray() {
+  tobjProjectsArray.length = 0;
+}
+
+export function addProject(title, description) {
+  tobjProjectsArray.push(createProject(title, description));
 }
 
 export function deleteProject(projectIndex) {

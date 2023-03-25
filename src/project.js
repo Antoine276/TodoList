@@ -3,10 +3,13 @@ import { createTodo } from './todo';
 class Project {
   sTitle;
 
+  sDescription = '';
+
   tobjTodosArray = [];
 
-  constructor(title) {
+  constructor(title, description) {
     this.sTitle = title;
+    this.sDescription = description;
   }
 
   modifyParameter(key, value) {
@@ -30,6 +33,6 @@ class Project {
   }
 }
 
-export function createProject(title) {
-  return new Project(title);
+export function createProject(title, description) {
+  return new Project(title, description);
 }

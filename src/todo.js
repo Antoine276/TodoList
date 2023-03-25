@@ -5,7 +5,7 @@ class Todo {
 
   nPriority;
 
-  sDescription;
+  sDescription = '';
 
   constructor(title, dueDate, priority, description) {
     this.sTitle = title;
