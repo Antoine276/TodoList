@@ -1,0 +1,88 @@
+#project_list li {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    border: none;
+    border-bottom: solid var(--custom-grey) 0.8px;
+    border-radius: 8px;
+    letter-spacing: 0.06rem;
+    font-weight: 520;
+    margin-bottom: 4px;
+    overflow: hidden;
+}
+
+#project_list li::before {
+    content: '📋';
+    padding-right: 4px;
+}
+
+#project_list li:hover {
+    font-weight: 600;
+}
+
+#todo_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    justify-content: start;
+    padding: 16px;
+}
+
+#todo_list > .todo_card {
+    width: 240px;
+    height: min-content;
+    border: solid 4px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: var(--custom-grey);
+    color: var(--custom-white);
+    padding: 4px 8px;
+}
+
+.todo_card > h2 {
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.todo_card > .due_date {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 0.86rem;
+}
+
+.todo_card > .due_date::before {
+    content: 'Due for : ';
+    padding-right: 4px;
+}
+
+.todo_card > .description {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 0.86rem;
+}
+
+.todo_card > .description[display = 'hidden'] {
+    display: none;
+}
+
+.todo_card > .extend_button {
+    color: var(--custom-white);
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    border: solid transparent 0.12px;
+    border-radius: 8px;
+    padding: 0px 4px;
+    margin: 6px 0;
+}
+
+.todo_card > .extend_button:hover {
+    cursor: pointer;
+    border-color: var(--custom-white);
+}

@@ -5,9 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
+
+    <link rel="stylesheet" href="./style.css" type="text/css">
 </head>
 <body>
-    
+    <div class="header">
+        <svg id="menu_button" fill='white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+        <span>Todo List.</span>
+    </div>
+    <div class="top_level_container">
+        <div class="list_container" id="list_container">
+            <h1>Projects</h1>
+            <div id="project_list"></div>
+        </div>
+        <div class="project_container">
+            <div id="todo_list"></div>
+        </div>
+        <div class="input_container">
+            <h1>Add A New Todo</h1>
+            <form action="">
+                <div class="input_item">
+                    <label for="title_input">Title</label>
+                    <input type="text" name="title" id="title_input" minlength="0" maxlength="40" placeholder="Do the groceries" required>
+                </div>
+                <div class="input_item">
+                    <label for="dueDate_input">Due for</label>
+                    <input type="number" name="dueDate" id="dueDate_input" required>
+                </div>
+                <div class="input_item">
+                    <label for="priority_input">Priority</label>
+                    <input type="number" name="priority" id="priority_input" min="1" max="3" value="1" required>
+                </div>
+                <div class="input_item">
+                    <label for="description_input">Description</label>
+                    <textarea name="description" id="description_input" cols="1" rows="5" placeholder="Buy 3 sponges and 1 avocado" ></textarea>
+                </div>
+
+                <input type="submit">
+                <button type="button" id="add_todo_button">Add</button>
+            </form>
+        </div>
+    </div>
     <script src="./main.js"></script>
 </body>
 </html>
