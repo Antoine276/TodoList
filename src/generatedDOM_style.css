@@ -53,11 +53,12 @@
     align-items: center;
     justify-content: end;
     font-size: 0.86rem;
+    font-style: italic;
 }
 
 .todo_card > .due_date::before {
-    content: 'Due for : ';
-    padding-right: 4px;
+    content: 'Due ';
+    padding-right: 6px;
 }
 
 .todo_card > .description {

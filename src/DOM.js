@@ -1,4 +1,5 @@
 import './generatedDOM_style.css';
+import { formatDistance } from 'date-fns';
 import { tobjProjectsArray, addNewTodoToProject } from './projectManager';
 
 // *************************
@@ -60,53 +61,62 @@ function priorityColor(priority) {
   return '#dc2626';
 }
 
+// Build a Todo Card
+function buildTodoCard(Todo, dtCurrDate) {
+  // Top-level Card
+  const todoCard = document.createElement('div');
+  todoCard.classList.add('todo_card');
+  todoCard.style.borderColor = priorityColor(Todo.nPriority);
+
+  // Title
+  const todoTitle = document.createElement('h2');
+  todoTitle.textContent = Todo.sTitle;
+
+  // Due Date
+  const strDueDateDistance = formatDistance(Todo.dtDueDate, dtCurrDate, { addSuffix: true });
+  const todoDueDate = document.createElement('div');
+  todoDueDate.classList.add('due_date');
+  todoDueDate.textContent = strDueDateDistance;
+
+  // Description
+  const todoDescription = document.createElement('div');
+  todoDescription.classList.add('description');
+  todoDescription.textContent = Todo.sDescription;
+  todoDescription.setAttribute('display', 'hidden');
+
+  // Extend button
+  const extendButton = document.createElement('button');
+  extendButton.classList.add('extend_button');
+  extendButton.textContent = '﹀';
+  extendButton.addEventListener('click', () => {
+    toggleDisplay(todoDescription);
+
+    if (extendButton.textContent === '﹀') {
+      extendButton.textContent = '︿';
+    } else {
+      extendButton.textContent = '﹀';
+    }
+  });
+
+  // Building card and append to container
+  todoCard.appendChild(todoTitle);
+  todoCard.appendChild(todoDueDate);
+  todoCard.appendChild(todoDescription);
+  todoCard.appendChild(extendButton);
+
+  todoList.appendChild(todoCard);
+}
+
 // Display all Todos of a Project
 export function displayProject(index) {
   // Reset area
   reset(todoList);
 
+  // Get current date
+  const dtCurrDate = Date.now();
+
   tobjProjectsArray[index].tobjTodosArray.forEach((obj) => {
-    // Top-level Card
-    const todoCard = document.createElement('div');
-    todoCard.classList.add('todo_card');
-    todoCard.style.borderColor = priorityColor(obj.nPriority);
-
-    // Title
-    const todoTitle = document.createElement('h2');
-    todoTitle.textContent = obj.sTitle;
-
-    // Due Date
-    const todoDueDate = document.createElement('div');
-    todoDueDate.classList.add('due_date');
-    todoDueDate.textContent = obj.nDueDate;
-
-    // Description
-    const todoDescription = document.createElement('div');
-    todoDescription.classList.add('description');
-    todoDescription.textContent = obj.sDescription;
-    todoDescription.setAttribute('display', 'hidden');
-
-    // Extend button
-    const extendButton = document.createElement('button');
-    extendButton.classList.add('extend_button');
-    extendButton.textContent = '﹀';
-    extendButton.addEventListener('click', () => {
-      toggleDisplay(todoDescription);
-
-      if (extendButton.textContent === '﹀') {
-        extendButton.textContent = '︿';
-      } else {
-        extendButton.textContent = '﹀';
-      }
-    });
-
-    // Building card and append to container
-    todoCard.appendChild(todoTitle);
-    todoCard.appendChild(todoDueDate);
-    todoCard.appendChild(todoDescription);
-    todoCard.appendChild(extendButton);
-
-    todoList.appendChild(todoCard);
+    buildTodoCard(obj, dtCurrDate);
   });
 
   // Set current project displayed
@@ -135,7 +145,7 @@ function addNewTodo() {
   addNewTodoToProject(
     currentProjectIndex,
     titleInput.value,
-    dueDateInput.value,
+    new Date(dueDateInput.value),
     priorityInput.value,
     descriptionInput.value,
   );
