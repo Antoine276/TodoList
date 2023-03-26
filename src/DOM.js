@@ -4,20 +4,27 @@ import {
   tobjProjectsArray, addProject, deleteProject, addNewTodoToProject, deleteTodoFromProject,
   saveInLocalStorage,
 } from './projectsManager';
+import { customValidityMessage } from './validity';
 
 // *************************
 // **** State variables ****
 // *************************
 let currentProjectIndex = 0; // Index of current project displayed
 
-// ******************
-// **** Elements ****
-// ******************
-// DOM areas
+// **********************
+// **** DOM Elements ****
+// **********************
+// Areas
 const projectList = document.getElementById('project_list');
 const todoList = document.getElementById('todo_list');
 const listContainer = document.getElementById('list_container');
-listContainer.setAttribute('display', 'hidden');
+listContainer.setAttribute('display', 'displayed');
+
+// Forms
+const todoInputForm = document.getElementById('todo_input_form');
+todoInputForm.addEventListener('submit', (event) => addNewDOMTodo(event));
+const projectInputForm = document.getElementById('project_input_form');
+projectInputForm.addEventListener('submit', (event) => addNewDOMProject(event));
 
 // Input fields
 const titleInput = document.getElementById('title_input');
@@ -26,6 +33,34 @@ const priorityInput = document.getElementById('priority_input');
 const descriptionInput = document.getElementById('description_input');
 const projectTitleInput = document.getElementById('project_title_input');
 const projectDescriptionInput = document.getElementById('project_description_input');
+
+// Validity objects
+const titleValidity = document.getElementById('title_validity');
+const dueDateValidity = document.getElementById('dueDate_validity');
+const priorityValidity = document.getElementById('priority_validity');
+const descriptionValidity = document.getElementById('description_validity');
+const projectTitleValidity = document.getElementById('project_title_validity');
+const projectDescriptionValidity = document.getElementById('project_description_validity');
+
+// Validity related event listeners
+titleInput.addEventListener('input', () => {
+  titleValidity.textContent = customValidityMessage(titleInput);
+});
+dueDateInput.addEventListener('input', () => {
+  dueDateValidity.textContent = customValidityMessage(dueDateInput);
+});
+priorityInput.addEventListener('input', () => {
+  priorityValidity.textContent = customValidityMessage(priorityInput);
+});
+descriptionInput.addEventListener('input', () => {
+  descriptionValidity.textContent = customValidityMessage(descriptionInput);
+});
+projectTitleInput.addEventListener('input', () => {
+  projectTitleValidity.textContent = customValidityMessage(projectTitleInput);
+});
+projectDescriptionInput.addEventListener('input', () => {
+  projectDescriptionValidity.textContent = customValidityMessage(projectDescriptionInput);
+});
 
 // Buttons
 const menuButton = document.getElementById('menu_button');
@@ -36,8 +71,6 @@ const addProjectButton = document.getElementById('add_project_button');
 // Buttons event listeners
 menuButton.addEventListener('click', () => toggleDisplay(listContainer));
 deleteProjectButton.addEventListener('click', () => deleteDOMProject());
-addTodoButton.addEventListener('click', () => addNewDOMTodo());
-addProjectButton.addEventListener('click', () => addNewDOMProject());
 
 // *******************
 // **** Functions ****
@@ -176,31 +209,39 @@ export function displayProjectsList() {
 }
 
 // Add new Todo
-function addNewDOMTodo() {
-  addNewTodoToProject(
-    currentProjectIndex,
-    titleInput.value,
-    dueDateInput.value,
-    priorityInput.value,
-    descriptionInput.value,
-  );
+function addNewDOMTodo(event) {
+  if (todoInputForm.checkValidity()) {
+    event.preventDefault();
 
-  // Save state in local storage
-  saveInLocalStorage();
+    addNewTodoToProject(
+      currentProjectIndex,
+      titleInput.value,
+      dueDateInput.value,
+      priorityInput.value,
+      descriptionInput.value,
+    );
 
-  // Refresh display
-  displayProject(currentProjectIndex);
+    // Save state in local storage
+    saveInLocalStorage();
+
+    // Refresh display
+    displayProject(currentProjectIndex);
+  }
 }
 
 // Add new Project
-function addNewDOMProject() {
-  addProject(projectTitleInput.value, projectDescriptionInput.value);
+function addNewDOMProject(event) {
+  if (projectInputForm.checkValidity()) {
+    event.preventDefault();
 
-  // Save state in local storage
-  saveInLocalStorage();
+    addProject(projectTitleInput.value, projectDescriptionInput.value);
 
-  // Refresh display
-  displayProjectsList();
+    // Save state in local storage
+    saveInLocalStorage();
+
+    // Refresh display
+    displayProjectsList();
+  }
 }
 
 // Delete Todo

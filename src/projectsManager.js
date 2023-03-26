@@ -48,14 +48,19 @@ export function addProject(title, description) {
 }
 
 export function deleteProject(projectIndex) {
-  if (tobjProjectsArray.length > 1) {
+  if (tobjProjectsArray.length > projectIndex) {
+    // If not empty, ask for confirmation
     if ((tobjProjectsArray[projectIndex].tobjTodosArray.length === 0)
      || (window.confirm('All Todos of this Project will also be deleted. Continue ?'))) {
       tobjProjectsArray.splice(projectIndex, 1);
-      return true;
     }
-  } else {
-    alert("You can't have less than one active project");
+
+    // If no project, create Default project
+    if (tobjProjectsArray.length === 0) {
+      addProject('Default', 'Default project');
+    }
+
+    return true;
   }
 
   return false;

@@ -12,6 +12,8 @@ ul, ol {
 :root {
     --custom-grey: #475569;
     --custom-white: #f8fafc;
+    --custom-invalid: #d81a1a;
+    --custom-valid: #16a34a;
 }
 
 html, body {
@@ -116,25 +118,41 @@ html, body {
 }
 
 .input_container .input_item {
+    position: relative;
     display: grid;
-    grid-template-columns: 36% 1fr;
+    grid-template-columns: 96px 1fr;
     gap: 8px;
     margin-bottom: 20px;
 }
 
-.input_item input[type="text"], 
-.input_item input[type="date"] {
+.input_item > input[type="text"], 
+.input_item > input[type="date"] {
     width: 100%;
 }
 
-.input_item textarea {
+.input_item > textarea {
     resize: none;
 }
 
-.input_item input[type="number"] {
+.input_item > input[type="number"] {
     width: min-content;
 }
 
-.input_container input[type="submit"] {
+.input_item > input:not(:placeholder-shown):invalid, 
+.input_item > textarea:not(:placeholder-shown):invalid {
+    border-color: var(--custom-invalid);
+    box-shadow: var(--custom-invalid) 0px 0.4px 0.4px;
+}
+
+.input_item > .input_validity {
+    position: absolute;
+    top: 22px;
+    left: 106px;
+    font-size: 0.72rem;
+    font-style: italic;
+    color: var(--custom-invalid);
+}
+
+.input_item > .input_validity[display="hidden"] {
     display: none;
 }

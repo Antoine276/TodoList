@@ -24,40 +24,46 @@
         </div>
         <div class="input_container">
             <div class="input_sub_container">
-                <h1>Add A New Todo</h1>
-                <form action="">
+                <h1>Add A New ToDo</h1>
+                <form action="" id="todo_input_form">
                     <div class="input_item">
                         <label for="title_input">Title*</label>
-                        <input type="text" name="title" id="title_input" minlength="0" maxlength="40" placeholder="Do the groceries" required>
+                        <input type="text" name="title" id="title_input" minlength="1" maxlength="16" placeholder="Do the groceries" required>
+                        <span class="input_validity" id="title_validity"></span>
                     </div>
                     <div class="input_item">
                         <label for="dueDate_input">Due for*</label>
                         <input type="date" name="dueDate" id="dueDate_input" required>
+                        <span class="input_validity" id="dueDate_validity"></span>
                     </div>
                     <div class="input_item">
                         <label for="priority_input">Priority*</label>
-                        <input type="number" name="priority" id="priority_input" min="1" max="3" value="1" required>
+                        <input type="number" name="priority" id="priority_input" min="1" max="3" step="1" value="1" required>
+                        <span class="input_validity" id="priority_validity"></span>
                     </div>
                     <div class="input_item">
                         <label for="description_input">Description</label>
-                        <textarea name="description" id="description_input" cols="1" rows="5" placeholder="Buy 3 sponges and 1 avocado"></textarea>
+                        <textarea name="description" id="description_input" cols="1" rows="5" maxlength="200" placeholder="Buy 3 sponges and 1 avocado"></textarea>
+                        <span class="input_validity" id="description_validity"></span>
                     </div>
-                    <button type="button" id="add_todo_button">Add</button>
+                    <button type="submit" id="add_todo_button">Add</button>
                 </form>
             </div>
 
             <div class="input_sub_container">
                 <h1>Add A New Project</h1>
-                <form action="">
+                <form action="" id="project_input_form">
                     <div class="input_item">
                         <label for="project_title_input">Title*</label>
-                        <input type="text" name="project_title" id="project_title_input" minlength="0" maxlength="40" placeholder="Family Tasks" required>
+                        <input type="text" name="project_title" id="project_title_input" minlength="1" maxlength="16" placeholder="Family Tasks" required>
+                        <span class="input_validity" id="project_title_validity"></span>
                     </div>
                     <div class="input_item">
                         <label for="project_description_input">Description</label>
-                        <textarea name="project_description" id="project_description_input" cols="1" rows="3" placeholder="For all family related memos"></textarea>
+                        <textarea name="project_description" id="project_description_input" cols="1" rows="3" maxlength="60" placeholder="For all family related memos"></textarea>
+                        <span class="input_validity" id="project_description_validity"></span>
                     </div>
-                    <button type="button" id="add_project_button">Add</button>
+                    <button type="submit" id="add_project_button">Add</button>
                 </form>
             </div>
         </div>
