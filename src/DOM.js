@@ -2,7 +2,8 @@ import './generatedDOM_style.css';
 import { formatDistance } from 'date-fns';
 import {
   tobjProjectsArray, addProject, deleteProject, addNewTodoToProject, deleteTodoFromProject,
-} from './projectManager';
+  saveInLocalStorage,
+} from './projectsManager';
 
 // *************************
 // **** State variables ****
@@ -34,17 +35,9 @@ const addProjectButton = document.getElementById('add_project_button');
 
 // Buttons event listeners
 menuButton.addEventListener('click', () => toggleDisplay(listContainer));
-deleteProjectButton.addEventListener('click', () => {
-  if (deleteProject(currentProjectIndex)) {
-    displayProjectsList();
-    displayProject(0);
-  }
-});
-addTodoButton.addEventListener('click', () => addNewTodo());
-addProjectButton.addEventListener('click', () => {
-  addProject(projectTitleInput.value, projectDescriptionInput.value);
-  displayProjectsList();
-});
+deleteProjectButton.addEventListener('click', () => deleteDOMProject());
+addTodoButton.addEventListener('click', () => addNewDOMTodo());
+addProjectButton.addEventListener('click', () => addNewDOMProject());
 
 // *******************
 // **** Functions ****
@@ -109,10 +102,7 @@ function buildTodoCard(Todo, index, dtCurrDate) {
   const deleteButton = document.createElement('button');
   deleteButton.classList.add('delete_button');
   deleteButton.textContent = '🗑';
-  deleteButton.addEventListener('click', () => {
-    deleteTodoFromProject(currentProjectIndex, index);
-    displayProject(currentProjectIndex);
-  });
+  deleteButton.addEventListener('click', () => deleteDOMTodo(currentProjectIndex, index));
 
   buttonsContainer.appendChild(deleteButton);
 
@@ -186,14 +176,52 @@ export function displayProjectsList() {
 }
 
 // Add new Todo
-function addNewTodo() {
+function addNewDOMTodo() {
   addNewTodoToProject(
     currentProjectIndex,
     titleInput.value,
-    new Date(dueDateInput.value),
+    dueDateInput.value,
     priorityInput.value,
     descriptionInput.value,
   );
 
+  // Save state in local storage
+  saveInLocalStorage();
+
+  // Refresh display
   displayProject(currentProjectIndex);
+}
+
+// Add new Project
+function addNewDOMProject() {
+  addProject(projectTitleInput.value, projectDescriptionInput.value);
+
+  // Save state in local storage
+  saveInLocalStorage();
+
+  // Refresh display
+  displayProjectsList();
+}
+
+// Delete Todo
+function deleteDOMTodo(projectIndex, todoIndex) {
+  deleteTodoFromProject(projectIndex, todoIndex);
+
+  // Save state in local storage
+  saveInLocalStorage();
+
+  // Refresh display
+  displayProject(currentProjectIndex);
+}
+
+// Delete Project
+function deleteDOMProject() {
+  // If successful
+  if (deleteProject(currentProjectIndex)) {
+    // Save state in local storage
+    saveInLocalStorage();
+
+    // Refresh display
+    displayProject(0);
+  }
 }

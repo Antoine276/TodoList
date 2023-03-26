@@ -3,11 +3,15 @@ import { createProject } from './project';
 export const tobjProjectsArray = [];
 const projectsArrayKey = 'projectsArray';
 
-export function saveAllInLocalStorage() {
+export function saveInLocalStorage() {
+  // Clear local storage for current domain
+  localStorage.clear();
+
+  // Save the projects array in local storage
   localStorage.setItem(projectsArrayKey, JSON.stringify(tobjProjectsArray));
 }
 
-export function getAllFromLocalStorage() {
+export function getFromLocalStorage() {
   // If nothing in local storage, return false
   if (localStorage.length === 0) {
     return false;
@@ -25,7 +29,7 @@ export function getAllFromLocalStorage() {
       addNewTodoToProject(
         index,
         todo.sTitle,
-        Date.parse(todo.dtDueDate),
+        todo.dtDueDate,
         parseInt(todo.nPriority, 10),
         todo.sDescription,
       );

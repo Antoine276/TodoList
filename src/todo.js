@@ -9,7 +9,7 @@ class Todo {
 
   constructor(title, dueDate, priority, description) {
     this.sTitle = title;
-    this.dtDueDate = dueDate;
+    this.dtDueDate = new Date(dueDate);
     this.nPriority = priority;
     this.sDescription = description;
   }
