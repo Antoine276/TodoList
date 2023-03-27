@@ -65,8 +65,6 @@ projectDescriptionInput.addEventListener('input', () => {
 // Buttons
 const menuButton = document.getElementById('menu_button');
 const deleteProjectButton = document.getElementById('delete_project_button');
-const addTodoButton = document.getElementById('add_todo_button');
-const addProjectButton = document.getElementById('add_project_button');
 
 // Buttons event listeners
 menuButton.addEventListener('click', () => toggleDisplay(listContainer));
@@ -210,9 +208,9 @@ export function displayProjectsList() {
 
 // Add new Todo
 function addNewDOMTodo(event) {
-  if (todoInputForm.checkValidity()) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (todoInputForm.checkValidity()) {
     addNewTodoToProject(
       currentProjectIndex,
       titleInput.value,
@@ -220,6 +218,9 @@ function addNewDOMTodo(event) {
       priorityInput.value,
       descriptionInput.value,
     );
+
+    // Reset inputs TODO
+    resetTodoInputForm();
 
     // Save state in local storage
     saveInLocalStorage();
@@ -231,10 +232,13 @@ function addNewDOMTodo(event) {
 
 // Add new Project
 function addNewDOMProject(event) {
-  if (projectInputForm.checkValidity()) {
-    event.preventDefault();
+  event.preventDefault();
 
+  if (projectInputForm.checkValidity()) {
     addProject(projectTitleInput.value, projectDescriptionInput.value);
+
+    // Reset inputs TODO
+    resetProjectInputForm();
 
     // Save state in local storage
     saveInLocalStorage();
@@ -265,4 +269,14 @@ function deleteDOMProject() {
     // Refresh display
     displayProject(0);
   }
+}
+
+// Reset Todo Form
+function resetTodoInputForm() {
+  todoInputForm.reset();
+}
+
+// Reset Project Form
+function resetProjectInputForm() {
+  projectInputForm.reset();
 }

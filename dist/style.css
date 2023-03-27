@@ -138,8 +138,8 @@ html, body {
     width: min-content;
 }
 
-.input_item > input:not(:placeholder-shown):invalid, 
-.input_item > textarea:not(:placeholder-shown):invalid {
+.input_item > input:invalid, 
+.input_item > textarea:invalid {
     border-color: var(--custom-invalid);
     box-shadow: var(--custom-invalid) 0px 0.4px 0.4px;
 }
